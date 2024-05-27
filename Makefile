@@ -110,11 +110,8 @@ SAIL_STEP_SRCS = riscv_step_common.sail riscv_step_ext.sail riscv_decode_ext.sai
 RVFI_STEP_SRCS = riscv_step_common.sail riscv_step_rvfi.sail riscv_decode_ext.sail riscv_fetch_rvfi.sail riscv_step.sail
 
 SAIL_OTHER_SRCS     = $(SAIL_STEP_SRCS)
-ifeq ($(ARCH),RV32)
-SAIL_OTHER_COQ_SRCS = riscv_termination_common.sail riscv_termination_rv32.sail
-else
-SAIL_OTHER_COQ_SRCS = riscv_termination_common.sail riscv_termination_rv64.sail
-endif
+
+SAIL_OTHER_COQ_SRCS = riscv_termination.sail
 
 PRELUDE_SRCS   = $(addprefix model/,$(PRELUDE))
 SAIL_SRCS      = $(addprefix model/,$(SAIL_ARCH_SRCS) $(SAIL_SEQ_INST_SRCS)  $(SAIL_OTHER_SRCS))
