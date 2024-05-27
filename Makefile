@@ -112,10 +112,10 @@ RVFI_STEP_SRCS = riscv_step_common.sail riscv_step_rvfi.sail riscv_decode_ext.sa
 # Control inclusion of 64-bit only riscv_analysis
 ifeq ($(ARCH),RV32)
 SAIL_OTHER_SRCS     = $(SAIL_STEP_SRCS)
-SAIL_OTHER_COQ_SRCS = riscv_termination_common.sail riscv_termination_rv32.sail
+SAIL_OTHER_COQ_SRCS = riscv_termination.sail
 else
 SAIL_OTHER_SRCS     = $(SAIL_STEP_SRCS) riscv_analysis.sail
-SAIL_OTHER_COQ_SRCS = riscv_termination_common.sail riscv_termination_rv64.sail riscv_analysis.sail
+SAIL_OTHER_COQ_SRCS = riscv_termination.sail riscv_analysis.sail
 endif
 
 
