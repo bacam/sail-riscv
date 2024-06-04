@@ -112,18 +112,18 @@ RVFI_STEP_SRCS = riscv_step_common.sail riscv_step_rvfi.sail riscv_decode_ext.sa
 # Control inclusion of 64-bit only riscv_analysis
 ifeq ($(ARCH),RV32)
 SAIL_OTHER_SRCS     = $(SAIL_STEP_SRCS)
-SAIL_OTHER_COQ_SRCS = riscv_termination.sail
 else
 SAIL_OTHER_SRCS     = $(SAIL_STEP_SRCS) riscv_analysis.sail
-SAIL_OTHER_COQ_SRCS = riscv_termination.sail riscv_analysis.sail
 endif
 
+# For the Coq output we need to know an upper bound on each loop
+SAIL_OTHER_COQ_SRCS = riscv_termination.sail
 
 PRELUDE_SRCS   = $(addprefix model/,$(PRELUDE))
 SAIL_SRCS      = $(addprefix model/,$(SAIL_ARCH_SRCS) $(SAIL_SEQ_INST_SRCS)  $(SAIL_OTHER_SRCS))
 SAIL_RMEM_SRCS = $(addprefix model/,$(SAIL_ARCH_SRCS) $(SAIL_RMEM_INST_SRCS) $(SAIL_OTHER_SRCS))
 SAIL_RVFI_SRCS = $(addprefix model/,$(SAIL_ARCH_RVFI_SRCS) $(SAIL_SEQ_INST_SRCS) $(RVFI_STEP_SRCS))
-SAIL_COQ_SRCS  = $(addprefix model/,$(SAIL_ARCH_SRCS) $(SAIL_SEQ_INST_SRCS) $(SAIL_OTHER_COQ_SRCS))
+SAIL_COQ_SRCS  = $(addprefix model/,$(SAIL_ARCH_SRCS) $(SAIL_SEQ_INST_SRCS) $(SAIL_OTHER_SRCS) $(SAIL_OTHER_COQ_SRCS))
 
 PLATFORM_OCAML_SRCS = $(addprefix ocaml_emulator/,platform.ml platform_impl.ml softfloat.ml riscv_ocaml_sim.ml)
 

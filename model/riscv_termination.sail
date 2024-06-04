@@ -45,3 +45,6 @@ function compressed_measure(instr) =
   }
 termination_measure execute(i) = compressed_measure(i)
 termination_measure pt_walk(_,_,_,_,_,_,_,level,_, _) = level
+
+// The top-level loop isn't terminating, but we put a limit so that it can still be included in the Coq output
+termination_measure loop while 100
