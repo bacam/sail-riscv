@@ -296,7 +296,7 @@ endif
 
 generated_definitions/lem/$(ARCH)/riscv.lem: $(SAIL_SRCS) Makefile.old
 	mkdir -p generated_definitions/lem/$(ARCH) generated_definitions/isabelle/$(ARCH)
-	$(SAIL) $(SAIL_FLAGS) -lem -lem_output_dir generated_definitions/lem/$(ARCH) -isa_output_dir generated_definitions/isabelle/$(ARCH) -o riscv -lem_lib Riscv_extras -lem_lib Riscv_extras_fdext $(SAIL_SRCS)
+	$(SAIL) $(SAIL_FLAGS) -lem -lem_output_dir generated_definitions/lem/$(ARCH) -isa_output_dir generated_definitions/isabelle/$(ARCH) -o riscv -lem_lib Riscv_extras -lem_lib Riscv_extras_fdext $(SAIL_SRCS) -splice handwritten_support/no_assembly.sail
 	echo "declare {isabelle} rename field sync_exception_ext = sync_exception_ext_exception" >> generated_definitions/lem/$(ARCH)/riscv_types.lem
 
 # sed -i isn't posix compliant, unfortunately
@@ -310,6 +310,8 @@ generated_definitions/isabelle/$(ARCH)/Riscv.thy: generated_definitions/isabelle
 	sed "s/record( 'asidlen, 'valen, 'palen, 'ptelen) TLB_Entry/record (overloaded) ( 'asidlen, 'valen, 'palen, 'ptelen) TLB_Entry/" generated_definitions/isabelle/$(ARCH)/Riscv_types.thy > generated_definitions/isabelle/$(ARCH)/Riscv_types.thy.new
 	mv generated_definitions/isabelle/$(ARCH)/Riscv_types.thy.new generated_definitions/isabelle/$(ARCH)/Riscv_types.thy
 	sed "s/by pat_completeness auto/by pat_completeness (auto intro!: let_cong bind_cong result.case_cong)/" generated_definitions/isabelle/$(ARCH)/Riscv.thy > generated_definitions/isabelle/$(ARCH)/Riscv.thy.new
+	mv generated_definitions/isabelle/$(ARCH)/Riscv.thy.new generated_definitions/isabelle/$(ARCH)/Riscv.thy
+	sed "s/WriteRAM_Meta addr width meta/WriteRAM_Meta addr width ()/" generated_definitions/isabelle/$(ARCH)/Riscv.thy > generated_definitions/isabelle/$(ARCH)/Riscv.thy.new
 	mv generated_definitions/isabelle/$(ARCH)/Riscv.thy.new generated_definitions/isabelle/$(ARCH)/Riscv.thy
 
 generated_definitions/hol4/$(ARCH)/Holmakefile: handwritten_support/Holmakefile
