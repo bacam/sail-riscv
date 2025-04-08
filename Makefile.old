@@ -291,7 +291,7 @@ endif
 
 generated_definitions/lem/$(ARCH)/riscv.lem: $(SAIL_SRCS) Makefile.old
 	mkdir -p generated_definitions/lem/$(ARCH) generated_definitions/isabelle/$(ARCH)
-	$(SAIL) $(SAIL_FLAGS) -lem -lem_output_dir generated_definitions/lem/$(ARCH) -isa_output_dir generated_definitions/isabelle/$(ARCH) -o riscv -lem_lib Riscv_extras -lem_lib Riscv_extras_fdext $(SAIL_SRCS) -splice handwritten_support/no_assembly.sail
+	$(SAIL) $(SAIL_FLAGS) --config config/default.json -lem -lem_output_dir generated_definitions/lem/$(ARCH) -isa_output_dir generated_definitions/isabelle/$(ARCH) -o riscv -lem_lib Riscv_extras -lem_lib Riscv_extras_fdext $(SAIL_SRCS) -splice handwritten_support/no_assembly.sail
 	echo "declare {isabelle} rename field sync_exception_ext = sync_exception_ext_exception" >> generated_definitions/lem/$(ARCH)/riscv_types.lem
 
 # sed -i isn't posix compliant, unfortunately

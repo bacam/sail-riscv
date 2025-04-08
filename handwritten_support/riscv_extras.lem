@@ -75,14 +75,14 @@ open import Sail2_values
 open import Sail2_operators_bitlists
 open import Sail2_concurrency_interface
 open import Sail2_monadic_combinators
-open import Riscv_types
 
 type bitvector = list Sail2_values.bitU
 
-val load_reservation : bitvector -> M unit
+val load_reservation : forall 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv 'e. bitvector -> monad 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv unit 'e
 let load_reservation addr = return ()
 
-let speculate_conditional_success () : M bool = return true
+val speculate_conditional_success : forall 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv 'e. unit -> monad 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv bool 'e
+let speculate_conditional_success () = return true
 
 let match_reservation _ = true
 let cancel_reservation () = return ()
@@ -207,15 +207,16 @@ val plat_htif_tohost : unit -> bitvector
 let plat_htif_tohost () = []
 declare ocaml target_rep function plat_htif_tohost = `Platform.htif_tohost`
 
-val plat_term_write : bitvector -> M unit
+val plat_term_write : forall 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv 'e. bitvector -> monad 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv unit 'e
 let plat_term_write _ = return ()
 declare ocaml target_rep function plat_term_write = `Platform.term_write`
 
-val plat_term_read : unit -> M bitvector
+val plat_term_read : forall 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv 'e. unit -> monad 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv bitvector 'e
 let plat_term_read () = return []
 declare ocaml target_rep function plat_term_read = `Platform.term_read`
 
-val plat_get_16_random_bits : unit -> M bitvector
+val plat_get_16_random_bits : forall 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv 'e. Register_Value 'rv =>
+  unit -> monad 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv bitvector 'e
 let plat_get_16_random_bits () = choose_bitvector "plat_get_16_random_bits" 16
 declare ocaml target_rep function plat_get_16_random_bits = `Platform.get_16_random_bits`
 
