@@ -22,6 +22,7 @@ let platform_arch = ref P.RV64
 
 (* logging *)
 
+let config_print_exception   = ref true
 let config_print_instr       = ref true
 let config_print_reg         = ref true
 let config_print_mem_access  = ref true
@@ -47,6 +48,7 @@ let print_platform s =
   then print_endline s
   else ()
 
+let get_config_print_exception () = !config_print_exception
 let get_config_print_instr () = !config_print_instr
 let get_config_print_reg () = !config_print_reg
 let get_config_print_mem () = !config_print_mem_access
@@ -101,6 +103,9 @@ let dram_size ()  = arch_bits_of_int64 !P.dram_size_ref
 
 let clint_base () = arch_bits_of_int64 P.clint_base
 let clint_size () = arch_bits_of_int64 P.clint_size
+
+let uart_base () = arch_bits_of_int64 P.uart_base
+let uart_size () = arch_bits_of_int64 P.uart_size
 
 let insns_per_tick () = Big_int.of_int P.insns_per_tick
 

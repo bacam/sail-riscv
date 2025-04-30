@@ -54,6 +54,8 @@ let dram_base  = 0x80000000L;;  (* Spike::DRAM_BASE *)
 let clint_base = 0x02000000L;;  (* Spike::CLINT_BASE *)
 let clint_size = 0x000c0000L;;  (* Spike::CLINT_SIZE *)
 let rom_base   = 0x00001000L;;  (* Spike::DEFAULT_RSTVEC *)
+let uart_base  = 0x10000000L;;
+let uart_size  = 0x100L;;
 
 let dram_size_ref = ref (Int64.(shift_left 64L 20))
 
