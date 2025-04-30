@@ -419,7 +419,7 @@ driver to output to the console. It ignores the configuration registers and
 does not supporting reading except from the line status register which indictes
 it is always ready to transmit. Does not support interrupts. */
 
-let UART_OFFSET_DATA    = 0x00000000
+let UART_OFFSET_DATA    = 0x0000001c
 let UART_OFFSET_LINE_CTL = 0x0000000c
 let UART_OFFSET_LINE_STATUS = 0x00000014
 /* Divisor latch access bit. We need this so that we can ignore writes to data
