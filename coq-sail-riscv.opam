@@ -8,6 +8,7 @@ bug-reports: "https://github.com/riscv/sail-riscv/issues"
 license: "BSD-2-Clause"
 dev-repo: "git+https://github.com/riscv/sail-riscv.git"
 build: [
+  ["mkdir" "-p" "build/_deps/jsoncons-src"]
   ["cmake" "-S" "." "-B" "build" "-DCMAKE_BUILD_TYPE=RelWithDebInfo" "-DDOWNLOAD_GMP=FALSE" "-DFETCHCONTENT_FULLY_DISCONNECTED=ON"]
   ["cmake" "--build" "build" "--target" "build_rocq_rv64d" "build_rocq_rv32d"]
 ]
