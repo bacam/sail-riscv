@@ -532,7 +532,7 @@ foreach (xlen IN ITEMS 32 64)
             ${arch}.lem
         COMMAND
             sed
-            -e "s/datatype ast/datatype (plugins only: size) ast/"
+            -e "s/datatype instruction/datatype (plugins only: size) instruction/"
             -e "s/record( 'asidlen, 'valen, 'palen, 'ptelen) TLB_Entry/record (overloaded) ( 'asidlen, 'valen, 'palen, 'ptelen) TLB_Entry/"
             "${CMAKE_BINARY_DIR}/isabelle/${arch}/${arch_thy}_types.thy"
             >
