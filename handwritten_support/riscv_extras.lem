@@ -13,8 +13,21 @@ open import Sail2_values
 open import Sail2_operators_bitlists
 open import Sail2_concurrency_interface
 open import Sail2_monadic_combinators
+open import Sail2_undefined_concurrency_interface
 
 type bitvector = list Sail2_values.bitU
+
+class ( StupidHack 'a )
+  val stupid_hack : list 'a -> nat
+end
+
+instance (StupidHack Sail2_values.bitU)
+  let stupid_hack bv = match unsigned bv with Just i -> natFromInteger i | Nothing -> 0 end
+end
+
+instance forall 'a. StupidHack 'a => (SailPAToNat (list 'a))
+  let pa_to_nat bv = stupid_hack bv
+end
 
 val load_reservation : forall 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv 'e. bitvector -> integer -> monad 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv unit 'e
 let load_reservation addr width = return ()
@@ -31,9 +44,9 @@ val plat_term_read : forall 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'transl
 let plat_term_read () = return []
 declare ocaml target_rep function plat_term_read = `Platform.term_read`
 
-val plat_get_16_random_bits : forall 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv 'e. Register_Value 'rv =>
+val plat_get_16_random_bits : forall 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv 'e.
   unit -> monad 'abort 'barrier 'cache_op 'fault 'pa 'tlb_op 'translation_summary 'trans_start 'trans_end 'arch_ak 'rv bitvector 'e
-let plat_get_16_random_bits () = choose_bitvector "plat_get_16_random_bits" 16
+let plat_get_16_random_bits () = undefined_bitvector (*"plat_get_16_random_bits"*) 16
 declare ocaml target_rep function plat_get_16_random_bits = `Platform.get_16_random_bits`
 
 let sys_enable_experimental_extensions () = false
